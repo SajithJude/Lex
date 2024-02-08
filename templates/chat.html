@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat with Agent</title>
+</head>
+<body>
+
+<input type="text" id="userInput" placeholder="Type your question...">
+<button id="sendButton">Send</button>
+<div id="chatContainer"></div>
+
+<script>
+document.getElementById('sendButton').addEventListener('click', function() {
+    const userInput = document.getElementById('userInput').value;
+    fetch('/chat', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ user_input: userInput }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        displayResponse(data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+});
+
+function displayResponse(data) {
+    const chatContainer = document.getElementById('chatContainer');
+    // Displaying the response
+    const responseElement = document.createElement('p');
+    responseElement.textContent = data.response;
+    chatContainer.appendChild(responseElement);
+
+    // Displaying image nodes, if any
+    // data.image_nodes.forEach(node => {
+    //     const imgElement = document.createElement('img');
+    //     imgElement.src = node.file_path; // Make sure this matches your node structure
+    //     chatContainer.appendChild(imgElement);
+    // });
+
+    // Displaying text nodes, if any
+    data.text_nodes.forEach(node => {
+        const textElement = document.createElement('p');
+        textElement.textContent = node.content; // Make sure this matches your node structure
+        chatContainer.appendChild(textElement);
+    });
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Build a RAGs bot, powered by LlamaIndex</title>
+</head>
+<body>
+    <h1>Build a RAGs bot, powered by LlamaIndex 💬🦙</h1>
+    {% for message in messages %}
+        <div class="{{ message.role }}">
+            <p>{{ message.content }}</p>
+        </div>
+
+    <!-- Add to chat.html within the message loop where appropriate -->
+        {% if message.image_nodes %}
+        <div>Images:</div>
+        {% for node in message.image_nodes %}
+            <img src="{{ node.metadata['file_path'] }}" alt="Image Source">
+        {% endfor %}
+        {% endif %}
+        {% if message.text_nodes %}
+        <div>Text Sources:</div>
+        {% for node in message.text_nodes %}
+            <p>{{ node.content }}</p> <!-- Adapt based on your node structure -->
+        {% endfor %}
+        {% endif %}
+
+    {% endfor %}
+    
+    <form action="/" method="post">
+        <input type="text" name="user_input" placeholder="Your question">
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

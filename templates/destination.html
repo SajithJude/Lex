@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparison of Legal Sections</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+   
+     
+    
+    
+    
+    <!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
+    <style>
+
+
+.overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000; /* Ensure it's above other content */
+        display: none; /* Hidden by default */
+    }
+
+    .loader {
+        border: 6px solid #f3f3f3; /* Light grey */
+        border-top: 6px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+        body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Rubik', sans-serif;
+    /* background-color: #f8f8f8; */
+}
+
+/* .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+} */
+
+.app-name {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.user-info {
+    cursor: pointer;
+}
+
+.search-bar {
+    margin: 30px;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    /* background-color: #fff; */
+}
+
+#sectionInput {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 90%;
+    margin-right: 10px;
+}
+
+#searchButton {
+    padding: 10px;
+    background-color: #b6b2b2;
+    color: #fff;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.content-container {
+    display: flex;
+    justify-content: space-around;
+    margin: 50px;
+    /* border: #706e6eab solid 1px; */
+    border-radius: 10px;
+
+}
+
+.column {
+    background-color: #fff;
+    width: 48%; /* Adjust based on padding and gap between columns */
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    /* margin: 10px; */
+    height: calc(100vh - 160px); /* Adjust based on header and search bar height */
+    overflow-y: auto;
+}
+
+h2 {
+    border-bottom: 2px solid #333;
+    padding-bottom: 5px;
+    font-size: medium;
+}
+
+.section-content {
+    margin-top: 20px;
+    /* Additional content styles */
+}
+
+#messageContent{
+   
+    color: #111;
+    background-color: #e5e5ea; /* Example styling */
+    align-self: flex-start;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 10px;
+}
+
+/* Add responsive design adjustments as needed */
+
+    </style>
+</head>
+<body>
+    <div class="overlay" id="overlay">
+        <div class="loader"></div>
+    </div>
+    
+
+    <div class="header">
+        <!-- <span class="app-name">LexAlign AI</span> -->
+        <!-- <div class="header"> -->
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" id="logo">
+            <span class="app-name">LexAlign AI</span>
+        <!-- </div> -->
+        <!-- <div class="user-info">
+            <span>User Name </span>
+        </div> -->
+    </div>
+
+    <div class="search-bar">
+        <input type="text" id="sectionInput" placeholder="Give me the IPC section number">
+        <button onclick="sendMessage()" id="searchButton">➔</button>
+    </div>
+
+    <div class="chat-area" id="responseContainer">
+        <!-- <h3>Response:</h3> -->
+        <div id="messageContent"></div>
+       
+    </div>
+    <div class="content-container">
+        
+
+
+        <div class="column">
+            <h2>The Code of Criminal Procedure, 1973</h2>
+            <!-- Content for the Criminal Procedure Code goes here -->
+            <div id="ipcTextNodes" class="section-content">
+                <!-- Dynamically load IPC section content here -->
+            </div>
+        </div>
+        <div class="column">
+            <h2>The Bharatiya Nagarik Suraksha Sanhita, 2023</h2>
+            <!-- Content for the Bharatiya Nagarik Suraksha Sanhita goes here -->
+            <div id="bnssTextNodes" class="section-content">
+                <!-- Dynamically load BNSS section content here -->
+            </div>
+        </div>
+        
+    </div>
+
+
+    <script>
+async function sendMessage() {
+    const userInput = document.getElementById('sectionInput').value;
+    const responseContainer = document.getElementById('responseContainer');
+    const messageContent = document.getElementById('messageContent');
+    const ipcTextNodes = document.getElementById('ipcTextNodes');
+    const bnssTextNodes = document.getElementById('bnssTextNodes');
+    // const loader = document.getElementById('loader'); // Get the loader element
+    const overlay = document.getElementById('overlay'); // Get the overlay element
+
+// Show the overlay with loader
+overlay.style.display = 'flex';
+
+
+// Show the loader
+loader.style.display = 'block';
+    // Clear previous response
+    messageContent.innerHTML = '';
+    ipcTextNodes.innerHTML = '';
+    bnssTextNodes.innerHTML = '';
+
+    try {
+        const response = await fetch('/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({user_input: userInput}),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        
+        // Display message content
+        messageContent.innerHTML = data.response;
+
+        // Separate and display text nodes by source
+        data.text_nodes.forEach((nodeContent) => {
+            const nodeElement = document.createElement('div');
+            nodeElement.innerHTML = `<pre>${nodeContent}</pre>`;
+
+            // Check if the content string mentions the file name
+            if (nodeContent.includes('ipc1973.pdf')) {
+                ipcTextNodes.appendChild(nodeElement);
+            } else if (nodeContent.includes('BNSS.pdf')) {
+                bnssTextNodes.appendChild(nodeElement);
+            }
+        });
+
+    } catch (error) {
+        console.error('Error fetching data: ', error);
+        responseContainer.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+    } finally {
+        // Hide the loader
+        // loader.style.display = 'none';
+        overlay.style.display = 'none';
+    }
+}
+
+
+    //     async function sendMessage() {
+    //         const userInput = document.getElementById('sectionInput').value;
+    //         const responseContainer = document.getElementById('responseContainer');
+    //         const messageContent = document.getElementById('messageContent');
+    //         const textNodes = document.getElementById('textNodes');
+
+    //         // Clear previous response
+    //         messageContent.innerHTML = '';
+    //         textNodes.innerHTML = '';
+
+    //         try {
+    //             const response = await fetch('/chat', {
+    //                 method: 'POST',
+    //                 headers: {
+    //                     'Content-Type': 'application/json',
+    //                 },
+    //                 body: JSON.stringify({user_input: userInput}),
+    //             });
+
+    //             if (!response.ok) {
+    //                 throw new Error(`HTTP error! status: ${response.status}`);
+    //             }
+
+    //             const data = await response.json();
+                
+    //             // Display message content
+    //             messageContent.innerHTML = data.response;
+
+    //             // Display text nodes
+    //             data.text_nodes.forEach((node, index) => {
+    //                 const nodeElement = document.createElement('div');
+    //                 nodeElement.innerHTML = `<strong>Source ${index + 1}:</strong> <pre>${JSON.stringify(node, null, 2)}</pre>`;
+    //                 textNodes.appendChild(nodeElement);
+    //             });
+
+    //         } catch (error) {
+    //             console.error('Error fetching data: ', error);
+    //             responseContainer.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+    //         }
+    //     }
+    // 
+    
+    </script>
+</body>
+</html>

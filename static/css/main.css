@@ -1,0 +1,234 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    background-color: #f0f0f0; /* White background */
+    font-family: 'Rubik', sans-serif;
+}
+
+.chat-container {
+    width: 100%;
+    /* height: 100vh; Full height of the viewport */
+    /* margin: 50px; */
+    display: flex;
+    flex-direction: column;
+    border: none;
+    box-shadow: none;
+}
+
+
+/* .initial-message { */
+    .initial-message {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #000000bd;
+        justify-content: center;
+        background-color: #f0f0f0; /* Light grey background */
+        padding: 20px;
+        margin: 10px;
+        border-radius: 10px;
+        text-align: center; /* Center text */
+    }
+    
+    .chat-logo {
+        width: 80px; /* Adjust width as needed */
+        height: 80px; /* Adjust height as needed, should be equal to width for a perfect circle */
+        margin-bottom: 20px; /* Space between logo and text */
+    }
+    
+    .initial-message-text {
+        font-size: 14px; /* Adjust font size as needed */
+        color: #333; /* Adjust text color as needed */
+        /* Additional styling for the text if needed */
+    }
+    
+
+
+.chat-area {
+    padding: 10px;
+    overflow-y: auto;
+    flex-grow: 1;
+    background-color: #ffffff4d; /* Black background for chat area */
+    color: #fff; /* White text */
+    border-radius: 15px;
+
+}
+
+.input-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* padding: 20px; */
+    background-color: #fff;
+    border-radius: 10px;
+    margin: 20px;
+    border: #000000bd 1px solid;
+}
+
+.input-container input {
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ddd; /* Adds a light border */
+    border-radius: 4px;
+    font-family: 'Rubik', sans-serif;
+    font-size: 16px; /* Adjust as needed */
+    color: #333;
+    background-color: #fff;
+    -webkit-appearance: none; /* Removes default styling on WebKit browsers */
+    -moz-appearance: none; /* Removes default styling on Firefox browsers */
+    appearance: none; /* Standard syntax */
+    margin-right: 20px;
+}
+
+.input-container button {
+    margin: 5px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #44444471; /* Dark grey for button */
+    color: white;
+    cursor: pointer;
+}
+
+.input-container button:hover {
+    background-color: #666; /* Lighter grey on hover */
+}
+
+.message {
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 100%;
+}
+
+.user-message {
+    background-color: #f7b2b2; /* White background for user messages */
+    color: #000; /* Black text */
+    align-self: flex-end;
+}
+
+.bot-message {
+    /* Existing styles for bot message */
+    color: #111;
+    background-color: #e5e5ea; /* Example styling */
+    align-self: flex-start;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 10px;
+    /* Other styling as necessary */
+}
+
+
+
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    /* background-color: #1111115f; */
+    color: #000; /* White text color */
+    padding: 10px 20px; /* Add some padding around the content */
+}
+
+#logo {
+    background-color: white;
+    height: 50px; /* Adjust the height to fit within the header */
+    width: auto; /* Ensure the logo maintains its aspect ratio */
+    margin-right: 15px; /* Space between the logo and the application name */
+}
+
+.app-name {
+    font-size: 24px; /* Large font size for the application name */
+    font-weight: bold; /* Make the application name bold */
+}
+
+
+
+
+.reply-message {
+    background-color: #f0f0f0; /* Slightly different from bot-message for distinction */
+    align-self: flex-start;
+    border: 1px solid #ddd; /* Optional: adds a slight border for emphasis */
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 10px;
+    color: #520404; /* Black text for readability */
+
+    max-width: 100%;
+}
+
+
+
+.conversation-starters {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 70px;
+    /* margin-left: 10px; */
+    /* margin-right: 10px; */
+
+}
+
+.starter-btn {
+    padding: 10px 0px;
+    background-color: #00000042;
+    color: rgba(0, 0, 0, 0.822);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.starter-btn:hover {
+    /* background-color: #0056b3; */
+    color: white;
+    background-color: #000000f4;
+
+}
+
+
+
+
+
+/* .search-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    margin: 10px;
+} */
+
+#ipcSectionInput {
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ddd; /* Adds a light border */
+    border-radius: 4px;
+    font-family: 'Rubik', sans-serif;
+    font-size: 16px; /* Adjust as needed */
+    color: #333;
+    background-color: #fff;
+    -webkit-appearance: none; /* Removes default styling on WebKit browsers */
+    -moz-appearance: none; /* Removes default styling on Firefox browsers */
+    appearance: none; /* Standard syntax */
+    margin-right: 20px;
+}
+
+#ipcSectionInput:focus {
+    outline: none;
+    border-color: #0056b3; /* Focus color */
+}
+
+#findButton {
+    margin: 5px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #44444471; /* Dark grey for button */
+    color: white;
+    cursor: pointer;/* Smooth transition for hover effect */
+}
+
+#findButton:hover {
+    background-color: #666; /* Lighter grey on hover */
+}
