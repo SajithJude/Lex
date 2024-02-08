@@ -212,7 +212,7 @@ def get_current_state() -> CurrentSessionState:
     current_state = CurrentSessionState(
         # agent_registry=session['agent_registry'],
         selected_id="legal_assistance_agent_v2",
-        cache = ParamCache.load_from_disk(str(r"cache\agents\legal_assistance_agent_v2")),
+        cache = ParamCache.load_from_disk(str("cache/agents/legal_assistance_agent_v2")),
         # selected_cache=session['selected_cache'],
         # agent_builder=None,
         # builder_agent=None,
@@ -224,7 +224,7 @@ def get_current_state() -> CurrentSessionState:
 
 
 
-cache = ParamCache.load_from_disk(str(r"cache\agents\legal_assistance_agent_v2"))
+cache = ParamCache.load_from_disk(str("cache/agents/legal_assistance_agent_v2"))
 agent = load_meta_agent_and_tools(cache=cache, agent_registry=AgentCacheRegistry(str(AGENT_CACHE_DIR)))
 
 
